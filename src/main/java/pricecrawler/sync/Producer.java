@@ -58,7 +58,7 @@ public class Producer implements CommandLineRunner {
 	                	String title = product.select(titleClass).text();
 	                	String priceString = priceInSpan ? product.select(priceClass).select("span").text() : product.select(priceClass).text();
 	                	String href = product.select("a").attr("abs:href");
-	                	System.out.println(priceString);
+	                	logger.info(priceString);
 
 	                	Product prd = new Product();
 	                	
