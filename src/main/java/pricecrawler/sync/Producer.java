@@ -81,7 +81,7 @@ public class Producer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
     	crawlProducts("https://www.fairprice.com.sg/", "product", ".pdt_title", ".pdt_C_price", false);
-    	crawlProducts("https://www.honestbee.sg/en/groceries/stores/fairprice", ".XaRs403S_a6U7-8Wfu_c3",
+    	crawlProducts("https://www.honestbee.sg/en/groceries/stores/fairprice", "XaRs403S_a6U7-8Wfu_c3",
     			"._2UCShViKs8ydkfj-XuvUhM", "._23g1UkP8VGFqvGuLjUsc-H", true);
     }
 
