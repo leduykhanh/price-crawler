@@ -22,16 +22,37 @@ public class ProductDao  {
 
 
 	@SuppressWarnings("unchecked")
-
 	public List<Product> selectAll() {
 		return entityManager.createQuery("from Product").getResultList();
 	}
 
 	public Product findById(String id) {
 		return (Product) entityManager.createQuery(
-		        "from User where id = :id")
+		        "from Product where id = :id")
 		        .setParameter("id", id)
 		        .getSingleResult();
+	}
+	
+	public Product getByTitle(String title) {
+	    return (Product) entityManager.createQuery(
+	        "from Product where title = :title")
+	        .setParameter("title", title)
+	        .getSingleResult();
+		  }
+	public void update(Product product) {
+		entityManager.merge(product);
+		return;
+		  }
+	 
+	public void updateOrInsert(Product product) {
+		try {
+			Product prdRecord = getByTitle(product.getTitle());
+			prdRecord.setPrice(product.getPrice());
+			update(prdRecord);
+		}
+		catch(Exception e) {
+			insert(product);
+		}
 	}
 	
 	@PersistenceContext

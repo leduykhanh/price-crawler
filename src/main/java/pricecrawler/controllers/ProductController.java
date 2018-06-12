@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pricecrawler.models.bean.Product;
-import pricecrawler.models.bean.User;
 import pricecrawler.models.dao.impl.ProductDao;
 
 @Controller

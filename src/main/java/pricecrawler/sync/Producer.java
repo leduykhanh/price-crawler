@@ -65,7 +65,7 @@ public class Producer implements CommandLineRunner {
 	                	prd.setPrice(Double.parseDouble(priceString.substring(1)));
 	                	prd.setAbsoluteUrl(href);
 	                	prd.setURL(href);
-	                	productDAO.insert(prd);
+	                	productDAO.updateOrInsert(prd);
                 	}
                 	catch (Exception e) {
                 		logger.error(e.getMessage());
