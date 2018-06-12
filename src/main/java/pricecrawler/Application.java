@@ -21,7 +21,7 @@ public class Application {
       executor.setCorePoolSize(2);
       executor.setMaxPoolSize(2);
       executor.setQueueCapacity(500);
-      executor.setThreadNamePrefix("GithubLookup-");
+      executor.setThreadNamePrefix("Price Crawler");
       executor.initialize();
       return executor;
   }
