@@ -40,24 +40,25 @@ public class Producer implements CommandLineRunner {
         links = new HashSet<String>();
     }
     
-    public void getPageLinks(String URL) {
+    public void crawlProducts(String URL, String productClass, String titleClass, String priceClass, boolean priceInSpan) {
         if (!links.contains(URL)) {
             try {
 
                 if (links.add(URL)) {
-                    System.out.println(URL);
+                    logger.info(URL);
                 }
 
                 Document document = Jsoup.connect(URL).timeout(60000).validateTLSCertificates(false).get();
 
-                Elements els = document.getElementsByClass("product");
+                Elements els = document.getElementsByClass(productClass);
 
 
                 for (Element product : els) {
                 	try {
-	                	String title = product.select(".pdt_title").text();
-	                	String priceString = product.select(".pdt_C_price").text();
+	                	String title = product.select(titleClass).text();
+	                	String priceString = priceInSpan ? product.select(priceClass).select("span").text() : product.select(priceClass).text();
 	                	String href = product.select("a").attr("abs:href");
+	                	System.out.println(priceString);
 
 	                	Product prd = new Product();
 	                	
@@ -72,14 +73,16 @@ public class Producer implements CommandLineRunner {
                 	}
                 }
             } catch (IOException e) {
-                System.err.println("For '" + URL + "': " + e.getMessage());
+            	logger.error("For '" + URL + "': " + e.getMessage());
             }
         }
     }
 
     @Override
     public void run(String... args) throws Exception {
-    	getPageLinks("https://www.fairprice.com.sg/");
+    	crawlProducts("https://www.fairprice.com.sg/", "product", ".pdt_title", ".pdt_C_price", false);
+    	crawlProducts("https://www.honestbee.sg/en/groceries/stores/fairprice", ".XaRs403S_a6U7-8Wfu_c3",
+    			"._2UCShViKs8ydkfj-XuvUhM", "._23g1UkP8VGFqvGuLjUsc-H", true);
     }
 
 }
